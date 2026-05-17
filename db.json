@@ -1,0 +1,36 @@
+{
+  "store_info": [
+    {
+      "id": 1,
+      "name": "Coffee R Us",
+      "description": "Your go-to destination for premium coffee from around the world.",
+      "phone_number": "555-1234"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Vanilla Bean",
+      "description": "Medium roast with a smooth, nutty flavor.",
+      "origin": "Colombia",
+      "roast": "Medium",
+      "price": 10.00
+    },
+    {
+      "id": 2,
+      "name": "House Blend",
+      "description": "Dark roast with a bold, rich flavor.",
+      "origin": "Vietnam",
+      "roast": "Dark",
+      "price": 12.00
+    },
+    {
+      "id": 3,
+      "name": "Morning Mist",
+      "description": "Light roast with floral and citrus notes.",
+      "origin": "Ethiopia",
+      "roast": "Light",
+      "price": 14.00
+    }
+  ]
+}
