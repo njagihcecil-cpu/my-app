@@ -3,8 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
 import AddProductForm from '../pages/AddProductForm'
 
-// AddProductForm uses useNavigate so it must be wrapped in a Router.
-// MemoryRouter is the test-friendly version — it doesn't need a real browser URL.
 const mockOnAdd = vi.fn()
 
 function renderForm() {
@@ -63,12 +61,10 @@ describe('AddProductForm', () => {
   })
 
   it('shows "Adding..." on the button while submitting', async () => {
-    // Mock fetch to return a pending promise so we can catch the in-between state
     global.fetch = vi.fn(() => new Promise(() => {}))
 
     renderForm()
 
-    // Fill in required fields
     fireEvent.change(screen.getByPlaceholderText(/Vanilla Bean/i), { target: { value: 'Espresso' } })
     fireEvent.change(screen.getByPlaceholderText(/Medium roast/i), { target: { value: 'Strong and bold' } })
     fireEvent.change(screen.getByPlaceholderText(/Colombia/i), { target: { value: 'Italy' } })
@@ -76,7 +72,6 @@ describe('AddProductForm', () => {
 
     fireEvent.click(screen.getByText('Add Coffee'))
 
-    // Button text should change to "Adding..." while waiting for fetch
     expect(screen.getByText('Adding...')).toBeInTheDocument()
   })
 
@@ -92,7 +87,6 @@ describe('AddProductForm', () => {
       price: 9.99,
     }
 
-    // Mock fetch to resolve with the saved product
     global.fetch = vi.fn(() =>
       Promise.resolve({
         json: () => Promise.resolve(savedProduct),
@@ -101,22 +95,19 @@ describe('AddProductForm', () => {
 
     renderForm()
 
-    // Fill in all required fields
     fireEvent.change(screen.getByPlaceholderText(/Vanilla Bean/i), { target: { value: 'Espresso' } })
     fireEvent.change(screen.getByPlaceholderText(/Medium roast/i), { target: { value: 'Strong and bold' } })
     fireEvent.change(screen.getByPlaceholderText(/Colombia/i), { target: { value: 'Italy' } })
     fireEvent.change(screen.getByPlaceholderText(/12.99/i), { target: { value: '9.99' } })
-
     fireEvent.click(screen.getByText('Add Coffee'))
 
-    // Wait for the fetch to resolve and check onAdd was called with the right data
     await waitFor(() => {
       expect(mockOnAdd).toHaveBeenCalledWith(savedProduct)
     })
   })
 
   it('shows an error message if the POST request fails', async () => {
-    // Mock fetch to simulate a network failure
+    
     global.fetch = vi.fn(() => Promise.reject(new Error('Network error')))
 
     renderForm()

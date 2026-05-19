@@ -28,15 +28,13 @@ function ProductCard({ product, onUpdate, onDelete }) {
     })
       .then(res => res.json())
       .then(updatedProduct => {
-        // Pass the full updated product back up to App state
+       
         onUpdate(updatedProduct)
         setIsEditing(false)
         setIsSaving(false)
       })
   }
 
-  // DELETE request — removes the product from the backend,
-  // then calls onDelete to remove it from App state too.
   function handleDelete() {
     // Ask for confirmation before permanently deleting
     if (!window.confirm(`Delete "${product.name}"?`)) return
@@ -45,12 +43,11 @@ function ProductCard({ product, onUpdate, onDelete }) {
       method: 'DELETE',
     })
       .then(() => {
-        // Pass the id up so App can filter this product out of state
+        
         onDelete(product.id)
       })
   }
 
-  // Cancel editing — reset all fields back to the original product values
   function handleCancel() {
     setEditName(product.name)
     setEditDescription(product.description)

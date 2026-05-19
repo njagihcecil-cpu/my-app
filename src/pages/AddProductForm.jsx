@@ -1,35 +1,24 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// AddProductForm handles creating a new coffee product.
-// onAdd is passed down from App.jsx and updates the products list in App state
-// after a successful POST so the products page reflects the new item immediately.
 function AddProductForm({ onAdd }) {
   const navigate = useNavigate()
 
-  // Each field in the form gets its own piece of state.
-  // This is a controlled form — React owns the input values, not the DOM.
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [origin, setOrigin] = useState('')
   const [roast, setRoast] = useState('Medium')
   const [price, setPrice] = useState('')
-
-  // Tracks whether the form is currently submitting to disable the button
-  // and prevent duplicate submissions.
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Holds any error message to display if the POST fails.
   const [error, setError] = useState(null)
 
   function handleSubmit(e) {
-    // Prevent the browser's default behaviour of refreshing the page on submit
+    
     e.preventDefault()
     setIsSubmitting(true)
     setError(null)
 
-    // Build the new product object to send to the backend.
-    // parseFloat converts the price string from the input into a number.
     const newProduct = {
       name,
       description,
@@ -38,8 +27,6 @@ function AddProductForm({ onAdd }) {
       price: parseFloat(price),
     }
 
-    // POST the new product to json-server.
-    // json-server automatically assigns an id and saves it to db.json.
     fetch('http://localhost:3001/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -47,9 +34,9 @@ function AddProductForm({ onAdd }) {
     })
       .then(res => res.json())
       .then(savedProduct => {
-        // Pass the saved product (which now has an id) up to App state
+        
         onAdd(savedProduct)
-        // Redirect to the products page so the admin can see the new item
+        
         navigate('/products')
       })
       .catch(() => {
@@ -62,7 +49,6 @@ function AddProductForm({ onAdd }) {
     <div style={styles.container}>
       <h2 style={styles.heading}>Add New Coffee</h2>
 
-      {/* Show error message if the POST request failed */}
       {error && <p style={styles.error}>{error}</p>}
 
       <form onSubmit={handleSubmit} style={styles.form}>
@@ -98,7 +84,7 @@ function AddProductForm({ onAdd }) {
         />
 
         <label style={styles.label}>Roast Level</label>
-        {/* A select dropdown limits the roast to valid options */}
+       
         <select
           style={styles.input}
           value={roast}
@@ -130,7 +116,6 @@ function AddProductForm({ onAdd }) {
             {isSubmitting ? 'Adding...' : 'Add Coffee'}
           </button>
 
-          {/* Cancel goes back to products without saving anything */}
           <button
             style={styles.cancelBtn}
             type="button"

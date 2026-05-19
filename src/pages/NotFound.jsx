@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 
-// NotFound renders when no route in App.jsx matches the current URL.
-// The "*" catch-all route in App.jsx points here.
 function NotFound() {
   const navigate = useNavigate()
 
