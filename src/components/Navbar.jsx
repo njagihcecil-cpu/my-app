@@ -9,22 +9,17 @@ function Navbar() {
         <NavLink
           to="/"
           end  
-          style={({ isActive }) => isActive ? styles.activeLink : styles.link}
-        >
+          style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
           Home
         </NavLink>
-
         <NavLink
           to="/products"
-          style={({ isActive }) => isActive ? styles.activeLink : styles.link}
-        >
+          style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
           Products
         </NavLink>
-
         <NavLink
           to="/add-product"
-          style={({ isActive }) => isActive ? styles.activeLink : styles.link}
-        >
+          style={({ isActive }) => isActive ? styles.activeLink : styles.link}>
           Add Product
         </NavLink>
       </div>

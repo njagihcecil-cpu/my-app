@@ -1,25 +1,15 @@
 import { useState } from 'react'
 
-// ProductCard displays a single coffee product.
-// onUpdate and onDelete are passed down from App.jsx through ProductsPage
-// so that changes reflect immediately across the whole app.
 function ProductCard({ product, onUpdate, onDelete }) {
 
-  // Controls whether the card is in "view" mode or "edit" mode
   const [isEditing, setIsEditing] = useState(false)
-
-  // When editing, these fields are pre-filled with the current product values
   const [editName, setEditName] = useState(product.name)
   const [editDescription, setEditDescription] = useState(product.description)
   const [editOrigin, setEditOrigin] = useState(product.origin)
   const [editRoast, setEditRoast] = useState(product.roast)
   const [editPrice, setEditPrice] = useState(product.price)
-
-  // Prevents duplicate PATCH or DELETE requests while one is in flight
   const [isSaving, setIsSaving] = useState(false)
 
-  // PATCH request — only sends the fields that the admin can edit.
-  // json-server merges the patch object into the existing product record.
   function handleSave() {
     setIsSaving(true)
 
@@ -124,7 +114,6 @@ function ProductCard({ product, onUpdate, onDelete }) {
             Cancel
           </button>
         </div>
-
       </div>
     )
   }
@@ -136,7 +125,8 @@ function ProductCard({ product, onUpdate, onDelete }) {
       <p style={styles.detail}>{product.description}</p>
       <p style={styles.detail}>🌍 <strong>Origin:</strong> {product.origin}</p>
       <p style={styles.detail}>🔥 <strong>Roast:</strong> {product.roast}</p>
-      <p style={styles.price}>${product.price.toFixed(2)}</p>
+      {/* <p style={styles.price}>${product.price.toFixed(2)}</p> */}
+     
 
       <div style={styles.buttonGroup}>
         <button style={styles.editBtn} onClick={() => setIsEditing(true)}>
